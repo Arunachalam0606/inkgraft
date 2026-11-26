@@ -33,3 +33,15 @@ test('unsupportedChars flags scripts the standard fonts cannot draw', () => {
   assert.deepEqual(unsupportedChars('Café – “ok” €5'), []);
   assert.deepEqual(unsupportedChars('மா A'), ['ம', 'ா']);
 });
+
+import { stampImage } from '../src/lib/ops.ts';
+test('stampImage draws the image only on the chosen pages', async () => {
+  // 1x1 red PNG
+  const png = Uint8Array.from(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64'));
+  const out = await stampImage(await blank(3), png, [{ page: 1, x: 10, y: 10, w: 50, h: 20 }]);
+  const doc = await getDocument({ data: out.slice() }).promise;
+  const ops = async (n: number) => (await (await doc.getPage(n)).getOperatorList()).fnArray.length;
+  assert.equal(await ops(1), 0);
+  assert.ok((await ops(2)) > 0);
+  assert.equal(await ops(3), 0);
+});

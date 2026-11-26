@@ -112,3 +112,14 @@ export async function unlock(bytes: Uint8Array, password: string) {
 export async function isEncrypted(bytes: Uint8Array) {
   try { await PDFDocument.load(bytes); return false; } catch (e) { if (/encrypted/i.test(String(e))) return true; throw e; }
 }
+
+// ---------- images on pages (signatures) ----------
+export interface Placement { page: number; x: number; y: number; w: number; h: number } // 0-based page, PDF user-space rect
+
+export async function stampImage(bytes: Uint8Array, png: Uint8Array, places: Placement[]) {
+  const doc = await load(bytes);
+  const img = await doc.embedPng(png);
+  const pages = doc.getPages();
+  for (const p of places) pages[p.page].drawImage(img, { x: p.x, y: p.y, width: p.w, height: p.h });
+  return doc.save();
+}

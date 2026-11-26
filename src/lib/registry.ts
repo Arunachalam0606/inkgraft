@@ -56,7 +56,7 @@ export const TOOLS: Tool[] = [
   t('crop', 'Crop & Resize', 'Trim margins or fit pages to A4 or Letter.', 'pages', Crop),
   t('zip', 'PDFs to ZIP', 'Bundle many PDFs into one ZIP archive.', 'pages', FileArchive),
 
-  t('sign', 'Sign PDF', 'Draw or type your signature and place it anywhere on the page.', 'edit', Signature, false, { keywords: 'signature autograph' }),
+  t('sign', 'Sign PDF', 'Draw or type your signature and place it anywhere on the page.', 'edit', Signature, true, { keywords: 'signature autograph' }),
   t('watermark', 'Add Watermark', 'Stamp text across your pages — angle, size and opacity your way.', 'edit', Droplets, true),
   t('page-numbers', 'Add Page Numbers', 'Number pages with your choice of position, format and start.', 'edit', Hash, true),
   t('edit-pdf', 'Edit PDF', 'Add text, shapes and images to any PDF.', 'edit', PenLine),
