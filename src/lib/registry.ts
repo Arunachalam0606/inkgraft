@@ -87,7 +87,7 @@ export const TOOLS: Tool[] = [
 
   t('ocr', 'Searchable PDF (OCR)', 'Add a hidden text layer to scanned PDFs so you can search and copy.', 'smart', ScanSearch, true, { keywords: 'ocr text recognize searchable' }),
   t('compare', 'Compare PDFs', 'See two PDFs side by side with the differences highlighted.', 'smart', Columns2, true),
-  t('repair', 'Repair PDF', 'Rebuild damaged or broken PDF files.', 'smart', Wrench),
+  t('repair', 'Repair PDF', 'Rebuild damaged or broken PDF files.', 'smart', Wrench, true),
 
   t('gst-invoice', 'GST Invoice', 'Create GST tax invoices with CGST, SGST, IGST and HSN codes.', 'business', Receipt),
   t('pos-bill', 'POS Bill', 'Quick shop bills with products, GST and thermal-printer layout.', 'business', Calculator),
