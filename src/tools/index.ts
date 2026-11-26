@@ -4,6 +4,7 @@ import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 export const TOOL_UI: Record<string, LazyExoticComponent<ComponentType>> = {
   merge: lazy(() => import('./Merge')),
   encrypt: lazy(() => import('./Security').then((m) => ({ default: m.Protect }))),
+  unlock: lazy(() => import('./Security').then((m) => ({ default: m.Unlock }))),
   watermark: lazy(() => import('./Watermark')),
   'page-numbers': lazy(() => import('./PageNumbers')),
   'pdf-to-images': lazy(() => import('./PdfToImages')),

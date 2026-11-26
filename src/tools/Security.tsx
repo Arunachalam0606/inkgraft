@@ -66,7 +66,7 @@ export function Protect() {
   return (
     <div>
       <FileChip file={f.file} onRemove={again} />
-      <div className="mt-6 max-w-[560px] space-y-5 rounded-2xl border border-line bg-surface p-6">
+      <form className="mt-6 max-w-[560px] space-y-5 rounded-2xl border border-line bg-surface p-6" onSubmit={(e) => { e.preventDefault(); if (pw.length >= 4 && pw === pw2) void run(); }}>
         <PasswordInput label="Password to open the PDF" value={pw} onChange={setPw} autoFocus />
         <div className="flex items-center gap-3" aria-live="polite">
           <div className="flex flex-1 gap-1">
@@ -86,9 +86,9 @@ export function Protect() {
             </label>
           ))}
         </fieldset>
-        <Button busy={busy} disabled={pw.length < 4 || pw !== pw2} onClick={run} className="w-full"><Lock className="size-4" />Protect PDF</Button>
+        <Button type="submit" busy={busy} disabled={pw.length < 4 || pw !== pw2} className="w-full"><Lock className="size-4" />Protect PDF</Button>
         <p className="text-[12px] text-faint">Encrypted with AES-256 on your device. Permission limits are honoured by most readers but aren’t a hard guarantee.</p>
-      </div>
+      </form>
       <ErrorNote error={f.error} />
       <Done show={!!done} title="Protected — downloading" detail={done} onAgain={again} />
     </div>

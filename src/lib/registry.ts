@@ -81,7 +81,7 @@ export const TOOLS: Tool[] = [
   t('pdf-to-audio', 'PDF to Audio', 'Listen to a PDF read aloud by your browser.', 'from-pdf', AudioLines),
 
   t('encrypt', 'Protect PDF', 'Lock a PDF with a password using strong encryption.', 'security', Lock, true, { keywords: 'password encrypt secure' }),
-  t('unlock', 'Remove Password', 'Remove the password from a PDF you can open.', 'security', KeyRound, false, { keywords: 'decrypt unlock password' }),
+  t('unlock', 'Remove Password', 'Remove the password from a PDF you can open.', 'security', KeyRound, true, { keywords: 'decrypt unlock password' }),
   t('fingerprint', 'File Fingerprint', 'SHA-256 and SHA-1 hashes to check a file is unchanged.', 'security', Fingerprint),
   t('auto-redact', 'Auto-Redact PII', 'Find and remove Aadhaar, PAN, card numbers, emails and phones.', 'security', ShieldCheck),
 
