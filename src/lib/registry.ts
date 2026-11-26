@@ -91,7 +91,7 @@ export const TOOLS: Tool[] = [
 
   t('gst-invoice', 'GST Invoice', 'Create GST tax invoices with CGST, SGST, IGST and HSN codes.', 'business', Receipt),
   t('pos-bill', 'POS Bill', 'Quick shop bills with products, GST and thermal-printer layout.', 'business', Calculator),
-  t('gst-filing', 'GST Filing Prep', 'Compress and split PDFs to fit GST portal upload limits.', 'business', FolderCheck),
+  t('gst-filing', 'GST Filing Prep', 'Compress and split PDFs to fit GST portal upload limits.', 'business', FolderCheck, true),
 ];
 
 export const toolById = (id: string) => TOOLS.find((x) => x.id === id);
