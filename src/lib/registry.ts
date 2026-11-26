@@ -64,7 +64,7 @@ export const TOOLS: Tool[] = [
   t('redact', 'Redact PDF', 'Permanently remove sensitive text and areas.', 'edit', EyeOff),
   t('bates', 'Bates Numbering', 'Stamp sequential Bates numbers across documents.', 'edit', ListOrdered, true),
   t('header-footer', 'Headers & Footers', 'Add headers and footers with text, dates and page numbers.', 'edit', PanelTop, true),
-  t('flatten', 'Flatten PDF', 'Make forms and annotations permanent.', 'edit', Stamp),
+  t('flatten', 'Flatten PDF', 'Make forms and annotations permanent.', 'edit', Stamp, true),
   t('invert', 'Invert Colours', 'Dark, sepia or high-contrast versions of a PDF.', 'edit', Contrast),
   t('handwriting', 'Text to Handwriting', 'Turn typed text into realistic handwritten notes.', 'edit', NotebookPen),
 
