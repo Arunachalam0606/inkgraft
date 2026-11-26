@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "node test.cjs"
+    "test": "node test.cjs && node --test tests/*.test.ts"
   },
   "dependencies": {
     "@cantoo/pdf-lib": "^2.11.1",

@@ -41,7 +41,7 @@ export const TOOLS: Tool[] = [
   t('scan-document', 'Scan Document', 'Use your camera to scan a document, straighten it and save it as a PDF.', 'scan', Camera),
   t('workflow', 'Workflow Builder', 'Chain several tools — compress, watermark, number — and run them in one go.', 'scan', Workflow),
 
-  t('merge', 'Merge PDFs', 'Combine several PDFs into one, in the order you choose.', 'pages', Files, false, { keywords: 'combine join' }),
+  t('merge', 'Merge PDFs', 'Combine several PDFs into one, in the order you choose.', 'pages', Files, true, { keywords: 'combine join' }),
   t('split', 'Split PDF', 'Cut a PDF into separate files by page ranges or every N pages.', 'pages', Scissors, false, { keywords: 'separate ranges' }),
   t('compress', 'Compress PDF', 'Shrink a PDF by re-encoding its pages at the quality you pick.', 'pages', Minimize2, false, { keywords: 'reduce size smaller' }),
   t('organize', 'Organize Pages', 'Drag to reorder, rotate or remove pages, with live thumbnails.', 'pages', LayoutGrid, false, { keywords: 'reorder sort arrange' }),
