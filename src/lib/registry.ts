@@ -52,7 +52,7 @@ export const TOOLS: Tool[] = [
   t('why-big', 'Why Is My PDF Big?', 'See which images, fonts and pages take up the space.', 'pages', FileSearch),
   t('split-half', 'Split Pages in Half', 'Slice every page down the middle — for two-page book scans.', 'pages', SplitSquareHorizontal),
   t('flip', 'Flip PDF', 'Mirror pages horizontally, vertically or both.', 'pages', FlipHorizontal2, true),
-  t('n-up', 'Pages Per Sheet', 'Put 2, 4, 6, 9 or 16 pages on one sheet to save paper.', 'pages', Grid2x2),
+  t('n-up', 'Pages Per Sheet', 'Put 2, 4, 6, 9 or 16 pages on one sheet to save paper.', 'pages', Grid2x2, true),
   t('crop', 'Crop & Resize', 'Trim margins or fit pages to A4 or Letter.', 'pages', Crop),
   t('zip', 'PDFs to ZIP', 'Bundle many PDFs into one ZIP archive.', 'pages', FileArchive),
 
