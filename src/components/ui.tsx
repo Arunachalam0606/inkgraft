@@ -14,7 +14,7 @@ export function Dropzone({ onFiles, accept = 'application/pdf,.pdf', multiple = 
   const input = useRef<HTMLInputElement>(null);
   const take = (list: FileList | null) => {
     if (!list?.length) return;
-    const ok = [...list].filter((f) => accept.split(',').some((a) => (a.startsWith('.') ? f.name.toLowerCase().endsWith(a) : a.endsWith('/*') ? f.type.startsWith(a.slice(0, -1)) : f.type === a)));
+    const ok = [...list].filter((f) => !accept || accept.split(',').some((a) => (a.startsWith('.') ? f.name.toLowerCase().endsWith(a) : a.endsWith('/*') ? f.type.startsWith(a.slice(0, -1)) : f.type === a)));
     if (ok.length) onFiles(multiple ? ok : ok.slice(0, 1));
   };
   return (
