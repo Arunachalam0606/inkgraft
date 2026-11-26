@@ -76,7 +76,7 @@ export function useSelection() {
 }
 
 /** Live preview of page 1 of whatever `make` produces from the loaded PDF; re-runs (debounced) when `key` changes. */
-export function usePreview(pdf: LoadedPdf | undefined, make: (bytes: Uint8Array) => Promise<Uint8Array>, key: string) {
+export function usePreview(pdf: LoadedPdf | undefined, make: (bytes: Uint8Array) => Promise<Uint8Array>, key: string, pageNo = 1) {
   const [url, setUrl] = useState<string>();
   const [err, setErr] = useState<string>();
   useEffect(() => {
@@ -86,13 +86,13 @@ export function usePreview(pdf: LoadedPdf | undefined, make: (bytes: Uint8Array)
       try {
         const out = await make(pdf.bytes);
         const doc = await openPdf(out);
-        const c = await renderPage(doc, 1, { width: 520 });
+        const c = await renderPage(doc, Math.min(pageNo, doc.numPages), { width: 520 });
         void doc.loadingTask.destroy();
         if (alive) { setUrl(c.toDataURL('image/jpeg', 0.85)); setErr(undefined); }
       } catch (e) { if (alive) setErr(friendly(e)); }
     }, 220);
     return () => { alive = false; clearTimeout(t); };
-  }, [pdf, key]); // `make` is recreated every render; `key` captures the options that matter
+  }, [pdf, key, pageNo]); // `make` is recreated every render; `key` captures the options that matter
   return { url, err };
 }
 
