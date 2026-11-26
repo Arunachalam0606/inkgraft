@@ -2,7 +2,7 @@ import { Reorder, motion } from 'motion/react';
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { PDFDocument } from '@cantoo/pdf-lib';
-import { Button, Done, Dropzone, ErrorNote, Field, Segmented } from '../components/ui';
+import { Button, Group, Done, Dropzone, ErrorNote, Segmented } from '../components/ui';
 import { download, formatBytes } from '../lib/pdf';
 
 type Size = 'fit' | 'a4' | 'letter';
@@ -59,8 +59,8 @@ export default function ImagesToPdf() {
       {imgs.length > 0 && (
         <>
           <div className="mt-6 flex flex-wrap items-end gap-6 rounded-2xl border border-line bg-surface p-5">
-            <Field label="Page size"><Segmented id="img-size" value={size} onChange={setSize} options={[{ value: 'a4', label: 'A4' }, { value: 'letter', label: 'Letter' }, { value: 'fit', label: 'Fit image' }]} /></Field>
-            {size !== 'fit' && <Field label="Margin"><Segmented id="img-margin" value={margin} onChange={setMargin} options={[{ value: 0, label: 'None' }, { value: 24, label: 'Small' }, { value: 56, label: 'Large' }]} /></Field>}
+            <Group label="Page size"><Segmented id="img-size" value={size} onChange={setSize} options={[{ value: 'a4', label: 'A4' }, { value: 'letter', label: 'Letter' }, { value: 'fit', label: 'Fit image' }]} /></Group>
+            {size !== 'fit' && <Group label="Margin"><Segmented id="img-margin" value={margin} onChange={setMargin} options={[{ value: 0, label: 'None' }, { value: 24, label: 'Small' }, { value: 56, label: 'Large' }]} /></Group>}
             <Button className="ml-auto" busy={busy} onClick={make}>Create PDF · {imgs.length} page{imgs.length > 1 ? 's' : ''}</Button>
           </div>
           <p className="mt-6 mb-3 text-[13px] text-faint">Drag to set the page order</p>

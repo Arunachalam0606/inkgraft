@@ -73,6 +73,17 @@ export function Field({ label, children, hint }: { label: string; children: Reac
   );
 }
 
+/** Label for a set of controls (a <label> would name only the first button inside). */
+export function Group({ label, children }: { label: string; children: ReactNode }) {
+  const id = `g-${label.replace(/\W+/g, '-').toLowerCase()}`;
+  return (
+    <div role="group" aria-labelledby={id}>
+      <span id={id} className="mb-1.5 block text-[13px] font-medium text-muted">{label}</span>
+      {children}
+    </div>
+  );
+}
+
 export const inputCls = 'w-full rounded-xl border border-line-strong bg-bg px-3.5 py-2.5 text-[14px] outline-none transition-colors placeholder:text-faint focus:border-accent';
 
 export function Segmented<T extends string | number>({ value, options, onChange, id }: { value: T; options: { value: T; label: string }[]; onChange: (v: T) => void; id: string }) {
