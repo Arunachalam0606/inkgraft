@@ -39,7 +39,7 @@ export function Sidebar({ onSearch, onNavigate }: { onSearch: () => void; onNavi
 
       <button onClick={onSearch} className="group mb-3 flex items-center gap-2.5 rounded-xl border border-line bg-surface px-3 py-2.5 text-[14px] text-faint transition-colors hover:border-line-strong hover:text-muted">
         <Search className="size-4" /><span className="flex-1 text-left">Search tools</span>
-        <kbd className="rounded-md border border-line px-1.5 text-[11px]">{isMac ? '⌘' : 'Ctrl'} K</kbd>
+        <kbd className="hidden rounded-md border border-line px-1.5 text-[11px] [@media(pointer:fine)]:inline">{isMac ? '⌘' : 'Ctrl'} K</kbd>
       </button>
 
       <NavItem icon={LayoutDashboard} label="Dashboard" active={path === '/'} onClick={() => go('/')} />

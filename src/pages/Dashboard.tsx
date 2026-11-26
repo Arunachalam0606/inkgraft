@@ -57,8 +57,8 @@ function Hero({ onSearch }: { onSearch: () => void }) {
         className="group mt-9 flex w-full max-w-[640px] items-center gap-3 rounded-2xl border border-line-strong bg-surface/80 px-5 py-4 text-left text-[15px] text-faint shadow-[0_20px_60px_-30px_var(--glow)] backdrop-blur transition-colors hover:border-accent/50"
       >
         <Search className="size-[18px]" />
-        <span className="flex-1">Search {TOOLS.length} tools — try “merge” or “scan”</span>
-        <kbd className="rounded-md border border-line px-2 py-0.5 text-[12px]">{isMac ? '⌘' : 'Ctrl'} K</kbd>
+        <span className="flex-1"><span className="sm:hidden">Search {TOOLS.length} tools</span><span className="hidden sm:inline">Search {TOOLS.length} tools — try “merge” or “scan”</span></span>
+        <kbd className="hidden rounded-md border border-line px-2 py-0.5 text-[12px] [@media(pointer:fine)]:inline">{isMac ? '⌘' : 'Ctrl'} K</kbd>
       </motion.button>
 
       <motion.ul initial="h" animate="s" variants={{ s: { transition: { staggerChildren: 0.06, delayChildren: 0.7 } } }} className="mt-7 flex flex-wrap gap-x-6 gap-y-2">

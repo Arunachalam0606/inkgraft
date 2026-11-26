@@ -1,3 +1,6 @@
+// theme comes from the dashboard's saved choice (dark by default); storage can throw in private windows
+try { const t = JSON.parse(localStorage.getItem('ig.theme') || '"dark"'); document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; }
+catch { document.documentElement.dataset.theme = 'dark'; }
 // self-hosted pdf.js (loaded on first open); no third-party CDNs
 let pdfjsLib = null;
 async function loadPdfjs() {

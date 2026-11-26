@@ -8,3 +8,4 @@ node_modules/
 dist/
 public/vendor/
 .*.tmp.mjs
+graphify-out/
