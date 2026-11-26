@@ -4,3 +4,4 @@
 node_modules/
 *.pdf
 .impeccable/
+.omc/
