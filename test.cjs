@@ -1,6 +1,11 @@
-// node test.js
+// node test.cjs
 const assert = require('assert');
-const T = require('./textops.js');
+const fs = require('fs');
+const vm = require('vm');
+// textops.js is a browser script (also CommonJS-compatible); load it as CommonJS regardless of package "type"
+const mod = { exports: {} };
+vm.runInNewContext(fs.readFileSync(__dirname + '/public/editor/textops.js', 'utf8'), { module: mod });
+const T = mod.exports;
 
 const L = (...w) => ({ words: w.map((text) => ({ text })) });
 const lines = [L('Date', ':26th', 'October', '2026.'), L('for', 'the', 'month', 'of', 'October', '2026.')];

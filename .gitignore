@@ -5,3 +5,5 @@ node_modules/
 *.pdf
 .impeccable/
 .omc/
+dist/
+public/vendor/

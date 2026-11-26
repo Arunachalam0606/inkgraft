@@ -1,0 +1,40 @@
+{
+  "name": "inkgraft",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "vendor": "node scripts/vendor.mjs",
+    "predev": "node scripts/vendor.mjs",
+    "prebuild": "node scripts/vendor.mjs",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "node test.cjs"
+  },
+  "dependencies": {
+    "@cantoo/pdf-lib": "^2.11.1",
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@tesseract.js-data/eng": "^1.0.0",
+    "clsx": "^2.1.1",
+    "jspdf": "^4.2.1",
+    "jszip": "^3.10.2",
+    "lucide-react": "^1.81.0",
+    "motion": "^14.14.0",
+    "pdfjs-dist": "^6.5.438",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tesseract.js": "^5.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}
