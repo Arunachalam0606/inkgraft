@@ -80,3 +80,35 @@ export async function pageNumbers(bytes: Uint8Array, o: NumberOpts) {
 // The 14 standard PDF fonts use WinAnsi: Latin-1 plus a few typographic extras. pdf-lib would print "?" for anything else.
 const WIN_ANSI_EXTRA = new Set('€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ');
 export const unsupportedChars = (text: string) => [...new Set([...text].filter((c) => !(c.charCodeAt(0) <= 0xff || WIN_ANSI_EXTRA.has(c))))];
+
+// ---------- security ----------
+export interface Perms { printing: boolean; copying: boolean; modifying: boolean }
+
+/** AES-256 with the user's open password; a random owner password locks the permission flags. */
+export async function protect(bytes: Uint8Array, password: string, perms: Perms) {
+  const doc = await load(bytes);
+  const owner = Array.from(crypto.getRandomValues(new Uint8Array(24)), (b) => b.toString(16).padStart(2, '0')).join('');
+  doc.encrypt({
+    userPassword: password, ownerPassword: owner, algorithm: 'AES-256',
+    permissions: { printing: perms.printing ? 'highResolution' : undefined, copying: perms.copying, modifying: perms.modifying, annotating: perms.modifying, fillingForms: true, contentAccessibility: true, documentAssembly: perms.modifying },
+  });
+  return doc.save();
+}
+
+/** Open with the password and save without encryption. Throws `WrongPassword` on a bad password. */
+export async function unlock(bytes: Uint8Array, password: string) {
+  let doc;
+  try { doc = await load(bytes, password); }
+  catch (e) { throw /password/i.test(String(e)) ? Object.assign(new Error('That password doesn’t open this PDF.'), { name: 'WrongPassword' }) : e; }
+  // saving the decrypted document in place keeps a stale /Encrypt in the trailer: rebuild from its pages instead
+  const out = await PDFDocument.create();
+  (await out.copyPages(doc, doc.getPageIndices())).forEach((p) => out.addPage(p));
+  const title = doc.getTitle(), author = doc.getAuthor();
+  if (title) out.setTitle(title);
+  if (author) out.setAuthor(author);
+  return out.save();
+}
+
+export async function isEncrypted(bytes: Uint8Array) {
+  try { await PDFDocument.load(bytes); return false; } catch (e) { if (/encrypted/i.test(String(e))) return true; throw e; }
+}
