@@ -54,7 +54,7 @@ export const TOOLS: Tool[] = [
   t('flip', 'Flip PDF', 'Mirror pages horizontally, vertically or both.', 'pages', FlipHorizontal2, true),
   t('n-up', 'Pages Per Sheet', 'Put 2, 4, 6, 9 or 16 pages on one sheet to save paper.', 'pages', Grid2x2, true),
   t('crop', 'Crop & Resize', 'Trim margins or fit pages to A4 or Letter.', 'pages', Crop, true),
-  t('zip', 'PDFs to ZIP', 'Bundle many PDFs into one ZIP archive.', 'pages', FileArchive),
+  t('zip', 'PDFs to ZIP', 'Bundle many PDFs into one ZIP archive.', 'pages', FileArchive, true),
 
   t('sign', 'Sign PDF', 'Draw or type your signature and place it anywhere on the page.', 'edit', Signature, true, { keywords: 'signature autograph' }),
   t('watermark', 'Add Watermark', 'Stamp text across your pages — angle, size and opacity your way.', 'edit', Droplets, true),
