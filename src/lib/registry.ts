@@ -45,7 +45,7 @@ export const TOOLS: Tool[] = [
   t('split', 'Split PDF', 'Cut a PDF into separate files by page ranges or every N pages.', 'pages', Scissors, false, { keywords: 'separate ranges' }),
   t('compress', 'Compress PDF', 'Shrink a PDF by re-encoding its pages at the quality you pick.', 'pages', Minimize2, false, { keywords: 'reduce size smaller' }),
   t('organize', 'Organize Pages', 'Drag to reorder, rotate or remove pages, with live thumbnails.', 'pages', LayoutGrid, false, { keywords: 'reorder sort arrange' }),
-  t('rotate', 'Rotate PDF', 'Rotate every page, or just the ones you pick, by 90°, 180° or 270°.', 'pages', RotateCw, false),
+  t('rotate', 'Rotate PDF', 'Rotate every page, or just the ones you pick, by 90°, 180° or 270°.', 'pages', RotateCw, true),
   t('delete-pages', 'Delete Pages', 'Remove pages by clicking them or typing a range.', 'pages', Trash2, true, { keywords: 'remove' }),
   t('extract-pages', 'Extract Pages', 'Pick pages and save them as a new PDF.', 'pages', FileOutput, true, { keywords: 'select save subset' }),
   t('interleave', 'Alternate & Mix', 'Interleave the pages of two PDFs, one page from each in turn.', 'pages', Layers),

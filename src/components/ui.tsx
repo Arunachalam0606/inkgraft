@@ -107,7 +107,7 @@ export function Thumb({ doc, page, rotation = 0, width = 150 }: { doc: PDFDocume
   return (
     <div ref={ref} className="grid aspect-[3/4] place-items-center overflow-hidden rounded-lg bg-white shadow-[0_1px_2px_rgb(0_0_0/0.2),0_8px_24px_-12px_rgb(0_0_0/0.35)]">
       {url
-        ? <motion.img src={url} alt={`Page ${page}`} initial={{ opacity: 0 }} animate={{ opacity: 1, rotate: rotation }} transition={{ type: 'spring', stiffness: 260, damping: 26 }} className="max-h-full max-w-full object-contain" />
+        ? <motion.img src={url} alt={`Page ${page}`} initial={{ opacity: 0 }} animate={{ opacity: 1, rotate: rotation, scale: Math.abs(rotation) % 180 === 90 ? 0.74 : 1 }} transition={{ type: 'spring', stiffness: 260, damping: 26 }} className="max-h-full max-w-full object-contain" />
         : <span className="size-5 animate-pulse rounded-full bg-black/10" />}
     </div>
   );
