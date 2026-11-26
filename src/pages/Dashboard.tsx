@@ -123,7 +123,7 @@ function AllTools() {
   return (
     <section className="px-6 pt-20 pb-24 sm:px-10" id="tools">
       <h2 className="text-[clamp(1.8rem,3vw,2.4rem)] font-semibold tracking-[-0.035em]">All tools</h2>
-      <p className="mt-2 text-muted">{TOOLS.filter((t) => t.ready).length} ready now, more landing every week. No limits, no watermark, no account.</p>
+      <p className="mt-2 text-muted">{TOOLS.length} tools, all running on your device. No limits, no watermark, no account.</p>
 
       <LayoutGroup>
         <div className="sticky top-0 z-20 -mx-6 mt-8 flex gap-2 overflow-x-auto bg-bg/80 px-6 py-3 backdrop-blur-xl no-scrollbar sm:-mx-10 sm:px-10" role="tablist" aria-label="Tool categories">

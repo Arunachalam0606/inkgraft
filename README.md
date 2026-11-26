@@ -8,37 +8,26 @@ Its signature tool, the **Scan Editor**, edits text in *scanned* PDFs using lett
 
 ## Tools
 
-| Category | Ready now |
+48 tools, all running on your device:
+
+| Category | Tools |
 |---|---|
-| Scan & Workflow | **Scan Editor**: edit scanned text with letters cloned from the page |
-| Page Management | Merge · Split · Compress · Organize · Rotate · Delete pages · Extract pages |
-| Edit & Annotate | Sign · Watermark · Page numbers |
-| Convert → PDF | Images to PDF (JPG, PNG, WebP, GIF, BMP) |
-| Convert → Other | PDF to JPG / PNG |
-| Security & Privacy | Protect (AES-256 password) · Remove password |
-| OCR & Smart | Searchable PDF (adds an invisible OCR text layer) |
+| Scan & Workflow | **Scan Editor** (edit scanned text with letters cloned from the page) · Scan Document (camera + perspective correction) · Workflow Builder (chain steps) |
+| Page Management | Merge · Split · Compress · Organize · Rotate · Delete pages · Extract pages · Alternate & Mix · Why is my PDF big? · Split pages in half · Flip · Pages per sheet · Crop & resize · PDFs to ZIP |
+| Edit & Annotate | Sign · Watermark · Page numbers · Edit PDF (text, white-out, highlight, images) · Fill form · Redact · Bates numbering · Headers & footers · Flatten · Invert colours · Text to handwriting |
+| Convert → PDF | Images · Text · Markdown · HTML · CSV |
+| Convert → Other | PDF to JPG/PNG · Extract text · Extract images · Edit metadata · PDF to audio (read aloud) |
+| Security & Privacy | Protect (AES-256) · Remove password · File fingerprint (SHA-256/384/512/1) · Auto-redact PII (Aadhaar, PAN, cards, account numbers, IFSC, emails, phones; scans via OCR) |
+| OCR & Smart | Searchable PDF (OCR text layer) · Compare PDFs (pixel diff) · Repair PDF |
+| Business | GST invoice (CGST/SGST/IGST, HSN, amount in words) · POS bill (80 mm receipt) · GST filing prep (split under portal size limits) |
 
-More are listed on the dashboard as **Soon**, among them the camera scanner, interleave, N-up, crop, forms, redaction, Markdown/HTML/CSV to PDF, text and image extraction, metadata, compare and repair.
+### Highlights
 
-### What each tool does
-
-- **Scan Editor:** click a word and type, or use find & replace across pages.
-  - New letters are cut from the scan, sized to the line and matched to the ink of the word they replace. A letter that never appears on the page falls back to the closest installed font.
-  - Move, resize and rotate any text.
-  - Undo, then export as a PDF.
-- **Merge:** drag files (or use the arrow buttons) to set their order.
-- **Split:** every N pages, one file per page, or custom ranges such as `1-3, 4-6, 7-`. A colour-coded preview shows which file each page lands in, and several parts download as a ZIP.
-- **Compress:** three levels.
-  - **Lossless** rewrites the file structure and keeps text selectable.
-  - **Strong** and **Extreme** re-encode each page as a 150 or 96 DPI JPEG.
-  - If the result isn't smaller, you get the original back.
-- **Organize:** drag thumbnails to reorder pages, rotate or delete single pages, and reset.
-- **Rotate, Delete, Extract:** pick pages by clicking thumbnails, shift-clicking a range, or typing a range.
-- **Sign:** draw or type a signature, place it on any page, then drag, resize or nudge it with the arrow keys. This adds an image of your signature, not a certificate-based digital signature.
-- **Watermark and Page numbers:** a live preview of the real output updates as you change the options.
-- **Protect:** AES-256 encryption, with permission flags locked by a random owner password.
-- **Remove password:** needs the current password.
-- **Searchable PDF:** Tesseract OCR reads each scanned page and adds the words as invisible text fitted to each word's box.
+- **Scan Editor:** click a word and type, or use find & replace. New letters are cut from the scan itself and matched to the ink of the word they replace. You can move, resize and rotate text, undo, and export.
+- **Redaction that really removes data:** pages are rebuilt as images with the boxes burned in, so nothing remains under them. Auto-redact finds Indian personal data, using on-device OCR for scans.
+- **Live previews:** watermarks, page numbers, headers, flips, crops, conversions and invoices show the real output while you change options.
+- **Real text where possible:** Text, Markdown, HTML, CSV and invoice PDFs contain selectable text. The layout engine wraps text, repeats table headers on every page and handles lists, quotes and code.
+- **Business maths you can trust:** all money is in paise, GSTINs are checksum-validated, and amounts are written out in the Indian system (lakh, crore).
 
 ## Privacy and security
 
@@ -83,7 +72,8 @@ node scripts/figure/build.mjs
 |---|---|
 | `src/pages/` | Dashboard, tool page frame, recent and starred lists |
 | `src/tools/` | One lazily loaded component per tool |
-| `src/lib/ops.ts` | Pure PDF operations: page building, split, stamping, encryption, OCR text layer. Tested in Node. |
+| `src/lib/ops*.ts`, `compose.ts`, `gst.ts`, `invoicePdf.ts`, `pii.ts`, `warp.ts` | Pure logic: page operations, stamping, encryption, OCR text layer, forms, workflows, the text layout engine, GST maths, personal-data detection, perspective correction. Tested in Node (`tests/`). |
+| `src/lib/raster.ts` | Browser-only: page rasterising, positioned words, the self-hosted Tesseract worker |
 | `src/lib/registry.ts` | Every tool, its category and whether it's ready |
 | `src/components/` | Sidebar, command palette, drop zone, page grid, live preview, React Bits components |
 | `src/figure/` | The graft press hero figure (generated art plus its live controller) |
@@ -95,6 +85,9 @@ node scripts/figure/build.mjs
 - **Latin text only for stamps.** Watermark and page numbers use the standard PDF fonts, which only cover Latin-1. Other scripts such as Tamil are refused with a message rather than printed as "?".
 - **Strong and Extreme compression rasterise pages.** Text stops being selectable; Lossless keeps it.
 - **OCR is English only.** It reads printed text, not handwriting.
+- **Text to Handwriting uses one font** (Caveat). It only covers Latin script.
+- **Scan Document doesn't detect page edges automatically.** You drag the four corners yourself.
+- **PDF to Audio reads aloud with your browser's voices.** Browsers don't let web pages record speech, so it can't save an audio file.
 - **Signature placement on rotated pages:** the position is correct, but the image isn't counter-rotated.
 
 ## Responsible use
