@@ -75,7 +75,7 @@ export const TOOLS: Tool[] = [
   t('csv-to-pdf', 'CSV to PDF', 'Turn a CSV file into a formatted table PDF.', 'to-pdf', Table, true),
 
   t('pdf-to-images', 'PDF to JPG / PNG', 'Export every page as a high-quality image, zipped.', 'from-pdf', FileImage, true, { keywords: 'jpg png image export convert' }),
-  t('extract-text', 'Extract Text', 'Copy out all the text of a PDF.', 'from-pdf', Type),
+  t('extract-text', 'Extract Text', 'Copy out all the text of a PDF.', 'from-pdf', Type, true),
   t('extract-images', 'Extract Images', 'Pull out the embedded images at original quality.', 'from-pdf', Images),
   t('metadata', 'Edit Metadata', 'Read and rewrite title, author, subject and keywords.', 'from-pdf', Tags, true),
   t('pdf-to-audio', 'PDF to Audio', 'Listen to a PDF read aloud by your browser.', 'from-pdf', AudioLines),
