@@ -43,7 +43,7 @@ export const TOOLS: Tool[] = [
 
   t('merge', 'Merge PDFs', 'Combine several PDFs into one, in the order you choose.', 'pages', Files, true, { keywords: 'combine join' }),
   t('split', 'Split PDF', 'Cut a PDF into separate files by page ranges or every N pages.', 'pages', Scissors, true, { keywords: 'separate ranges' }),
-  t('compress', 'Compress PDF', 'Shrink a PDF by re-encoding its pages at the quality you pick.', 'pages', Minimize2, false, { keywords: 'reduce size smaller' }),
+  t('compress', 'Compress PDF', 'Shrink a PDF by re-encoding its pages at the quality you pick.', 'pages', Minimize2, true, { keywords: 'reduce size smaller' }),
   t('organize', 'Organize Pages', 'Drag to reorder, rotate or remove pages, with live thumbnails.', 'pages', LayoutGrid, true, { keywords: 'reorder sort arrange' }),
   t('rotate', 'Rotate PDF', 'Rotate every page, or just the ones you pick, by 90°, 180° or 270°.', 'pages', RotateCw, true),
   t('delete-pages', 'Delete Pages', 'Remove pages by clicking them or typing a range.', 'pages', Trash2, true, { keywords: 'remove' }),
