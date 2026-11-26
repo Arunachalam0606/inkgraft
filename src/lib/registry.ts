@@ -48,7 +48,7 @@ export const TOOLS: Tool[] = [
   t('rotate', 'Rotate PDF', 'Rotate every page, or just the ones you pick, by 90°, 180° or 270°.', 'pages', RotateCw, true),
   t('delete-pages', 'Delete Pages', 'Remove pages by clicking them or typing a range.', 'pages', Trash2, true, { keywords: 'remove' }),
   t('extract-pages', 'Extract Pages', 'Pick pages and save them as a new PDF.', 'pages', FileOutput, true, { keywords: 'select save subset' }),
-  t('interleave', 'Alternate & Mix', 'Interleave the pages of two PDFs, one page from each in turn.', 'pages', Layers),
+  t('interleave', 'Alternate & Mix', 'Interleave the pages of two PDFs, one page from each in turn.', 'pages', Layers, true),
   t('why-big', 'Why Is My PDF Big?', 'See which images, fonts and pages take up the space.', 'pages', FileSearch),
   t('split-half', 'Split Pages in Half', 'Slice every page down the middle — for two-page book scans.', 'pages', SplitSquareHorizontal),
   t('flip', 'Flip PDF', 'Mirror pages horizontally, vertically or both.', 'pages', FlipHorizontal2),
