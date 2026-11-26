@@ -4,6 +4,7 @@ import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 export const TOOL_UI: Record<string, LazyExoticComponent<ComponentType>> = {
   merge: lazy(() => import('./Merge')),
   rotate: lazy(() => import('./Rotate')),
+  split: lazy(() => import('./Split')),
   'delete-pages': lazy(() => import('./PickPages').then((m) => ({ default: m.Delete }))),
   'extract-pages': lazy(() => import('./PickPages').then((m) => ({ default: m.Extract }))),
 };
