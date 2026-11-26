@@ -90,7 +90,7 @@ export const TOOLS: Tool[] = [
   t('repair', 'Repair PDF', 'Rebuild damaged or broken PDF files.', 'smart', Wrench, true),
 
   t('gst-invoice', 'GST Invoice', 'Create GST tax invoices with CGST, SGST, IGST and HSN codes.', 'business', Receipt, true),
-  t('pos-bill', 'POS Bill', 'Quick shop bills with products, GST and thermal-printer layout.', 'business', Calculator),
+  t('pos-bill', 'POS Bill', 'Quick shop bills with products, GST and thermal-printer layout.', 'business', Calculator, true),
   t('gst-filing', 'GST Filing Prep', 'Compress and split PDFs to fit GST portal upload limits.', 'business', FolderCheck, true),
 ];
 
