@@ -45,9 +45,9 @@ test('cropMargins and fitTo', async () => {
 });
 
 test('metadata round trip and scrub', async () => {
-  const m = { title: 'Bill', author: 'CLC', subject: 'Oct', keywords: 'a, b', creator: 'x', producer: 'y' };
+  const m = { title: 'Bill', author: 'Acme', subject: 'Oct', keywords: 'a, b', creator: 'x', producer: 'y' };
   const back = await readMeta(await writeMeta(await doc(['a']), m));
-  assert.equal(back.title, 'Bill'); assert.equal(back.author, 'CLC'); assert.equal(back.keywords, 'a b');
+  assert.equal(back.title, 'Bill'); assert.equal(back.author, 'Acme'); assert.equal(back.keywords, 'a b');
 });
 
 test('header/footer templates and bates numbering continue across files', async () => {

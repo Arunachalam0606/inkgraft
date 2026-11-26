@@ -1,10 +1,10 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { createWorker } from 'tesseract.js';
 import { Button, Done, Dropzone, ErrorNote, FileChip, Thumb } from '../components/ui';
 import { useSinglePdf } from '../components/pages';
 import { baseName, download, formatBytes, renderPage } from '../lib/pdf';
 import { addTextLayer, type OcrWord } from '../lib/ops';
+import { ocrWorker } from '../lib/raster';
 
 const SCALE = 2.5; // 180 DPI: enough for Tesseract on typical scans without huge canvases
 
@@ -21,15 +21,9 @@ export default function Ocr() {
     if (!pdf) return;
     setBusy(true); setError(undefined); setSample(undefined);
     let current = 1;
-    const worker = await createWorker('eng', 1, {
-      // self-hosted: the CSP allows no third-party scripts or data
-      workerPath: `${location.origin}/vendor/tesseract/worker.min.js`,
-      corePath: `${location.origin}/vendor/tesseract/core`,
-      langPath: `${location.origin}/vendor/tesseract/lang`,
-      logger: (m: { status: string; progress: number }) => {
-        if (m.status === 'recognizing text') setStatus({ page: current, pct: m.progress, label: 'Reading text' });
-        else if (/loading|initializ/i.test(m.status)) setStatus({ page: current, pct: m.progress, label: 'Loading the text engine (first time only)' });
-      },
+    const worker = await ocrWorker((m) => {
+      if (m.status === 'recognizing text') setStatus({ page: current, pct: m.progress, label: 'Reading text' });
+      else if (/loading|initializ/i.test(m.status)) setStatus({ page: current, pct: m.progress, label: 'Loading the text engine (first time only)' });
     });
     try {
       const pages: { page: number; words: OcrWord[] }[] = [];
