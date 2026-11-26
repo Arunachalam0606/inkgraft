@@ -77,7 +77,7 @@ export const TOOLS: Tool[] = [
   t('pdf-to-images', 'PDF to JPG / PNG', 'Export every page as a high-quality image, zipped.', 'from-pdf', FileImage, true, { keywords: 'jpg png image export convert' }),
   t('extract-text', 'Extract Text', 'Copy out all the text of a PDF.', 'from-pdf', Type),
   t('extract-images', 'Extract Images', 'Pull out the embedded images at original quality.', 'from-pdf', Images),
-  t('metadata', 'Edit Metadata', 'Read and rewrite title, author, subject and keywords.', 'from-pdf', Tags),
+  t('metadata', 'Edit Metadata', 'Read and rewrite title, author, subject and keywords.', 'from-pdf', Tags, true),
   t('pdf-to-audio', 'PDF to Audio', 'Listen to a PDF read aloud by your browser.', 'from-pdf', AudioLines),
 
   t('encrypt', 'Protect PDF', 'Lock a PDF with a password using strong encryption.', 'security', Lock, true, { keywords: 'password encrypt secure' }),
