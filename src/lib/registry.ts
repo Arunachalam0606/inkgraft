@@ -62,7 +62,7 @@ export const TOOLS: Tool[] = [
   t('edit-pdf', 'Edit PDF', 'Add text, shapes and images to any PDF.', 'edit', PenLine),
   t('fill-form', 'Fill PDF Form', 'Fill a fillable PDF and lock the answers in.', 'edit', ClipboardList),
   t('redact', 'Redact PDF', 'Permanently remove sensitive text and areas.', 'edit', EyeOff),
-  t('bates', 'Bates Numbering', 'Stamp sequential Bates numbers across documents.', 'edit', ListOrdered),
+  t('bates', 'Bates Numbering', 'Stamp sequential Bates numbers across documents.', 'edit', ListOrdered, true),
   t('header-footer', 'Headers & Footers', 'Add headers and footers with text, dates and page numbers.', 'edit', PanelTop, true),
   t('flatten', 'Flatten PDF', 'Make forms and annotations permanent.', 'edit', Stamp),
   t('invert', 'Invert Colours', 'Dark, sepia or high-contrast versions of a PDF.', 'edit', Contrast),
