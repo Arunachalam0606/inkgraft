@@ -1,8 +1,8 @@
 import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
-import { useCallback, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { PDFDocumentProxy } from 'pdfjs-dist';
-import { openPdf, readBytes } from '../lib/pdf';
+import { openPdf, readBytes, renderPage } from '../lib/pdf';
 import { Thumb } from './ui';
 
 export interface LoadedPdf { file: File; bytes: Uint8Array; doc: PDFDocumentProxy; count: number }
@@ -73,4 +73,40 @@ export function useSelection() {
     setLast(n);
   };
   return { sel, setSel, toggle };
+}
+
+/** Live preview of page 1 of whatever `make` produces from the loaded PDF; re-runs (debounced) when `key` changes. */
+export function usePreview(pdf: LoadedPdf | undefined, make: (bytes: Uint8Array) => Promise<Uint8Array>, key: string) {
+  const [url, setUrl] = useState<string>();
+  const [err, setErr] = useState<string>();
+  useEffect(() => {
+    if (!pdf) return;
+    let alive = true;
+    const t = setTimeout(async () => {
+      try {
+        const out = await make(pdf.bytes);
+        const doc = await openPdf(out);
+        const c = await renderPage(doc, 1, { width: 520 });
+        void doc.loadingTask.destroy();
+        if (alive) { setUrl(c.toDataURL('image/jpeg', 0.85)); setErr(undefined); }
+      } catch (e) { if (alive) setErr(friendly(e)); }
+    }, 220);
+    return () => { alive = false; clearTimeout(t); };
+  }, [pdf, key]); // `make` is recreated every render; `key` captures the options that matter
+  return { url, err };
+}
+
+/** Standard PDF fonts only cover Latin-1 (WinAnsi); say so instead of showing an encoder stack trace. */
+export const friendly = (e: unknown) => (/WinAnsi|cannot encode/i.test(String(e)) ? 'That text has characters the built-in PDF font can’t draw — stick to Latin letters, digits and punctuation.' : (e as Error).message);
+
+export function PreviewPane({ url, label = 'Preview · page 1' }: { url?: string; label?: string }) {
+  return (
+    <div className="lg:sticky lg:top-6">
+      <p className="mb-2 text-[12px] text-faint">{label}</p>
+      <div className="grid min-h-[300px] place-items-center rounded-2xl border border-line bg-surface-2 p-4">
+        {url ? <motion.img key={url.length} src={url} alt="Preview of the first page" initial={{ opacity: 0.6 }} animate={{ opacity: 1 }} className="max-h-[560px] rounded shadow-[0_10px_40px_-15px_rgb(0_0_0/0.5)]" />
+          : <span className="size-6 animate-pulse rounded-full bg-line-strong" />}
+      </div>
+    </div>
+  );
 }

@@ -1,5 +1,5 @@
 // Page-level PDF operations on raw bytes (pdf-lib). Pure: no DOM, so tests run them in Node.
-import { PDFDocument, degrees } from '@cantoo/pdf-lib';
+import { PDFDocument, StandardFonts, degrees, rgb } from '@cantoo/pdf-lib';
 
 export interface PageSpec { index: number; rotate?: number } // 0-based source page, extra rotation in degrees
 
@@ -32,3 +32,51 @@ export function chunks(count: number, size: number): number[][] {
 export async function split(bytes: Uint8Array, groups: number[][]) {
   return Promise.all(groups.map((g) => buildFrom(bytes, g.map((index) => ({ index })))));
 }
+
+// ---------- stamping ----------
+
+export interface WatermarkOpts { text: string; size: number; opacity: number; angle: number; color: [number, number, number] }
+
+/** Text across the middle of every page, at an angle, semi-transparent. */
+export async function watermark(bytes: Uint8Array, o: WatermarkOpts) {
+  const doc = await load(bytes);
+  const font = await doc.embedFont(StandardFonts.HelveticaBold);
+  const rad = (o.angle * Math.PI) / 180;
+  for (const page of doc.getPages()) {
+    const { width, height } = page.getSize();
+    const w = font.widthOfTextAtSize(o.text, o.size), h = font.heightAtSize(o.size);
+    // start point so the rotated text's centre lands on the page centre
+    const x = width / 2 - (Math.cos(rad) * w) / 2 + (Math.sin(rad) * h) / 2;
+    const y = height / 2 - (Math.sin(rad) * w) / 2 - (Math.cos(rad) * h) / 2;
+    page.drawText(o.text, { x, y, size: o.size, font, color: rgb(...o.color), opacity: o.opacity, rotate: degrees(o.angle) });
+  }
+  return doc.save();
+}
+
+export type Corner = 'bottom-center' | 'bottom-right' | 'bottom-left' | 'top-center' | 'top-right' | 'top-left';
+export interface NumberOpts { position: Corner; format: string; start: number; size: number; margin: number; skipFirst?: boolean }
+
+/** "{n}" and "{total}" in `format` become the page number and the count of numbered pages. */
+export const formatNumber = (format: string, n: number, total: number) => format.replaceAll('{n}', String(n)).replaceAll('{total}', String(total));
+
+export async function pageNumbers(bytes: Uint8Array, o: NumberOpts) {
+  const doc = await load(bytes);
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const pages = doc.getPages();
+  const numbered = o.skipFirst ? pages.slice(1) : pages;
+  const total = numbered.length + o.start - 1;
+  numbered.forEach((page, i) => {
+    const label = formatNumber(o.format, o.start + i, total);
+    const { width, height } = page.getSize();
+    const w = font.widthOfTextAtSize(label, o.size);
+    const [v, hz] = o.position.split('-');
+    const x = hz === 'left' ? o.margin : hz === 'right' ? width - o.margin - w : (width - w) / 2;
+    const y = v === 'top' ? height - o.margin - o.size : o.margin;
+    page.drawText(label, { x, y, size: o.size, font, color: rgb(0.2, 0.2, 0.22) });
+  });
+  return doc.save();
+}
+
+// The 14 standard PDF fonts use WinAnsi: Latin-1 plus a few typographic extras. pdf-lib would print "?" for anything else.
+const WIN_ANSI_EXTRA = new Set('€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ');
+export const unsupportedChars = (text: string) => [...new Set([...text].filter((c) => !(c.charCodeAt(0) <= 0xff || WIN_ANSI_EXTRA.has(c))))];

@@ -57,7 +57,7 @@ export const TOOLS: Tool[] = [
   t('zip', 'PDFs to ZIP', 'Bundle many PDFs into one ZIP archive.', 'pages', FileArchive),
 
   t('sign', 'Sign PDF', 'Draw or type your signature and place it anywhere on the page.', 'edit', Signature, false, { keywords: 'signature autograph' }),
-  t('watermark', 'Add Watermark', 'Stamp text across your pages — angle, size and opacity your way.', 'edit', Droplets, false),
+  t('watermark', 'Add Watermark', 'Stamp text across your pages — angle, size and opacity your way.', 'edit', Droplets, true),
   t('page-numbers', 'Add Page Numbers', 'Number pages with your choice of position, format and start.', 'edit', Hash, false),
   t('edit-pdf', 'Edit PDF', 'Add text, shapes and images to any PDF.', 'edit', PenLine),
   t('fill-form', 'Fill PDF Form', 'Fill a fillable PDF and lock the answers in.', 'edit', ClipboardList),
