@@ -123,3 +123,26 @@ export async function stampImage(bytes: Uint8Array, png: Uint8Array, places: Pla
   for (const p of places) pages[p.page].drawImage(img, { x: p.x, y: p.y, width: p.w, height: p.h });
   return doc.save();
 }
+
+// ---------- OCR text layer ----------
+export interface OcrWord { text: string; x: number; y: number; w: number; h: number } // PDF user space, (x, y) = bottom-left
+
+/** Invisible (opacity 0) text over each word, horizontally fitted to its box, so the page becomes searchable and copyable. */
+export async function addTextLayer(bytes: Uint8Array, pages: { page: number; words: OcrWord[] }[]) {
+  const doc = await load(bytes);
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const all = doc.getPages();
+  let count = 0;
+  for (const { page, words } of pages) {
+    for (const w of words) {
+      const text = [...w.text].map((c) => (unsupportedChars(c).length ? '?' : c)).join('').trim();
+      if (!text || w.w <= 0 || w.h <= 0) continue;
+      const unit = font.widthOfTextAtSize(text, 1);
+      // fit the word's width (what selection highlights follow); clamp only absurd sizes from bad OCR boxes
+      const size = Math.max(w.h * 0.5, Math.min(w.h * 2.2, w.w / unit));
+      all[page].drawText(text, { x: w.x, y: w.y + w.h * 0.18, size, font, opacity: 0 });
+      count++;
+    }
+  }
+  return { bytes: await doc.save(), count };
+}
