@@ -208,7 +208,7 @@ async function openFile(file) {
     const rasters = [];
     if (isPdf) {
       setStatus('Opening PDF…');
-      const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+      const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer(), isEvalSupported: false /* CVE-2024-4367: no font-code eval from untrusted PDFs */ }).promise;
       for (let i = 1; i <= pdf.numPages; i++) {
         const p = await pdf.getPage(i);
         const vp = p.getViewport({ scale: SCALE });
