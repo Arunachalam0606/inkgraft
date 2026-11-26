@@ -83,7 +83,7 @@ export const TOOLS: Tool[] = [
   t('encrypt', 'Protect PDF', 'Lock a PDF with a password using strong encryption.', 'security', Lock, true, { keywords: 'password encrypt secure' }),
   t('unlock', 'Remove Password', 'Remove the password from a PDF you can open.', 'security', KeyRound, true, { keywords: 'decrypt unlock password' }),
   t('fingerprint', 'File Fingerprint', 'SHA-256 and SHA-1 hashes to check a file is unchanged.', 'security', Fingerprint, true),
-  t('auto-redact', 'Auto-Redact PII', 'Find and remove Aadhaar, PAN, card numbers, emails and phones.', 'security', ShieldCheck),
+  t('auto-redact', 'Auto-Redact PII', 'Find and remove Aadhaar, PAN, card numbers, emails and phones.', 'security', ShieldCheck, true),
 
   t('ocr', 'Searchable PDF (OCR)', 'Add a hidden text layer to scanned PDFs so you can search and copy.', 'smart', ScanSearch, true, { keywords: 'ocr text recognize searchable' }),
   t('compare', 'Compare PDFs', 'See two PDFs side by side with the differences highlighted.', 'smart', Columns2),
