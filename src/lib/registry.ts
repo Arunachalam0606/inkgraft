@@ -72,7 +72,7 @@ export const TOOLS: Tool[] = [
   t('txt-to-pdf', 'Text to PDF', 'Convert plain-text files into clean PDFs.', 'to-pdf', FileText, true),
   t('md-to-pdf', 'Markdown to PDF', 'Convert Markdown into a nicely typeset PDF.', 'to-pdf', FileCode2, true),
   t('html-to-pdf', 'HTML to PDF', 'Convert HTML files into PDFs.', 'to-pdf', FileType, true),
-  t('csv-to-pdf', 'CSV to PDF', 'Turn a CSV file into a formatted table PDF.', 'to-pdf', Table),
+  t('csv-to-pdf', 'CSV to PDF', 'Turn a CSV file into a formatted table PDF.', 'to-pdf', Table, true),
 
   t('pdf-to-images', 'PDF to JPG / PNG', 'Export every page as a high-quality image, zipped.', 'from-pdf', FileImage, true, { keywords: 'jpg png image export convert' }),
   t('extract-text', 'Extract Text', 'Copy out all the text of a PDF.', 'from-pdf', Type),
