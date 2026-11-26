@@ -66,7 +66,7 @@ export const TOOLS: Tool[] = [
   t('header-footer', 'Headers & Footers', 'Add headers and footers with text, dates and page numbers.', 'edit', PanelTop, true),
   t('flatten', 'Flatten PDF', 'Make forms and annotations permanent.', 'edit', Stamp, true),
   t('invert', 'Invert Colours', 'Dark, sepia or high-contrast versions of a PDF.', 'edit', Contrast, true),
-  t('handwriting', 'Text to Handwriting', 'Turn typed text into realistic handwritten notes.', 'edit', NotebookPen),
+  t('handwriting', 'Text to Handwriting', 'Turn typed text into realistic handwritten notes.', 'edit', NotebookPen, true),
 
   t('images-to-pdf', 'Images to PDF', 'Turn JPG, PNG and WebP images into one PDF.', 'to-pdf', Image, true, { keywords: 'jpg png photo convert' }),
   t('txt-to-pdf', 'Text to PDF', 'Convert plain-text files into clean PDFs.', 'to-pdf', FileText, true),

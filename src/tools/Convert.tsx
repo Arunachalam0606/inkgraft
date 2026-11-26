@@ -7,7 +7,7 @@ import { unsupportedChars } from '../lib/ops';
 
 type Kind = 'txt' | 'md' | 'html' | 'csv';
 const META: Record<Kind, { accept: string; label: string; sample: string; out: string }> = {
-  txt: { accept: '.txt,text/plain', label: 'a .txt file', out: 'text.pdf', sample: 'Meeting notes — 26 Nov 2026\n\nAttendees: Arun, Priya\n\n1. Renew the CLC contract for November.\n2. Send the bill by Friday.' },
+  txt: { accept: '.txt,text/plain', label: 'a .txt file', out: 'text.pdf', sample: 'Meeting notes — 26 Nov 2026\n\nAttendees: Sam, Priya\n\n1. Renew the support contract for November.\n2. Send the bill by Friday.' },
   md: { accept: '.md,.markdown,text/markdown', label: 'a Markdown file', out: 'document.pdf', sample: '# Project update\n\nThe **Scan Editor** now clones letters from the scan.\n\n## Next\n\n- Camera scanner\n- GST invoice\n  - CGST / SGST split\n\n> Everything runs on your device.\n\n| Tool | Status |\n|---|---|\n| Merge | Ready |\n| OCR | Ready |' },
   html: { accept: '.html,.htm,text/html', label: 'an HTML file', out: 'page.pdf', sample: '<h1>Receipt</h1><p>Thank you for your <b>payment</b>.</p><ul><li>Plan: Pro</li><li>Paid: Rs. 1,200</li></ul><table><tr><th>Item</th><th>Amount</th></tr><tr><td>Pro plan</td><td>1,200</td></tr></table>' },
   csv: { accept: '.csv,text/csv', label: 'a CSV file', out: 'table.pdf', sample: 'Date,Description,Amount\n2026-11-01,Office rent,"25,000"\n2026-11-05,Internet,1199\n2026-11-12,"Printer ink, black",850' },
