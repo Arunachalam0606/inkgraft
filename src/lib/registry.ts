@@ -50,7 +50,7 @@ export const TOOLS: Tool[] = [
   t('extract-pages', 'Extract Pages', 'Pick pages and save them as a new PDF.', 'pages', FileOutput, true, { keywords: 'select save subset' }),
   t('interleave', 'Alternate & Mix', 'Interleave the pages of two PDFs, one page from each in turn.', 'pages', Layers, true),
   t('why-big', 'Why Is My PDF Big?', 'See which images, fonts and pages take up the space.', 'pages', FileSearch),
-  t('split-half', 'Split Pages in Half', 'Slice every page down the middle — for two-page book scans.', 'pages', SplitSquareHorizontal),
+  t('split-half', 'Split Pages in Half', 'Slice every page down the middle — for two-page book scans.', 'pages', SplitSquareHorizontal, true),
   t('flip', 'Flip PDF', 'Mirror pages horizontally, vertically or both.', 'pages', FlipHorizontal2, true),
   t('n-up', 'Pages Per Sheet', 'Put 2, 4, 6, 9 or 16 pages on one sheet to save paper.', 'pages', Grid2x2, true),
   t('crop', 'Crop & Resize', 'Trim margins or fit pages to A4 or Letter.', 'pages', Crop),
