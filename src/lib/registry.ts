@@ -78,7 +78,7 @@ export const TOOLS: Tool[] = [
   t('extract-text', 'Extract Text', 'Copy out all the text of a PDF.', 'from-pdf', Type, true),
   t('extract-images', 'Extract Images', 'Pull out the embedded images at original quality.', 'from-pdf', Images, true),
   t('metadata', 'Edit Metadata', 'Read and rewrite title, author, subject and keywords.', 'from-pdf', Tags, true),
-  t('pdf-to-audio', 'PDF to Audio', 'Listen to a PDF read aloud by your browser.', 'from-pdf', AudioLines),
+  t('pdf-to-audio', 'PDF to Audio', 'Listen to a PDF read aloud by your browser.', 'from-pdf', AudioLines, true),
 
   t('encrypt', 'Protect PDF', 'Lock a PDF with a password using strong encryption.', 'security', Lock, true, { keywords: 'password encrypt secure' }),
   t('unlock', 'Remove Password', 'Remove the password from a PDF you can open.', 'security', KeyRound, true, { keywords: 'decrypt unlock password' }),
