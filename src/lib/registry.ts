@@ -68,7 +68,7 @@ export const TOOLS: Tool[] = [
   t('invert', 'Invert Colours', 'Dark, sepia or high-contrast versions of a PDF.', 'edit', Contrast),
   t('handwriting', 'Text to Handwriting', 'Turn typed text into realistic handwritten notes.', 'edit', NotebookPen),
 
-  t('images-to-pdf', 'Images to PDF', 'Turn JPG, PNG and WebP images into one PDF.', 'to-pdf', Image, false, { keywords: 'jpg png photo convert' }),
+  t('images-to-pdf', 'Images to PDF', 'Turn JPG, PNG and WebP images into one PDF.', 'to-pdf', Image, true, { keywords: 'jpg png photo convert' }),
   t('txt-to-pdf', 'Text to PDF', 'Convert plain-text files into clean PDFs.', 'to-pdf', FileText),
   t('md-to-pdf', 'Markdown to PDF', 'Convert Markdown into a nicely typeset PDF.', 'to-pdf', FileCode2),
   t('html-to-pdf', 'HTML to PDF', 'Convert HTML files into PDFs.', 'to-pdf', FileType),
