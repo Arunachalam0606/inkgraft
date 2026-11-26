@@ -1,79 +1,102 @@
 # inkgraft
 
-Edit scanned PDFs so that the new text looks like it was always on the page.
+Private PDF tools that run entirely in your browser. Nothing you open is uploaded: every file is read, changed and saved on your own device.
 
-inkgraft finds the text on a scanned page, cuts real letters out of the scan, and builds the new words from those letters. The new text has the same typeface, the same faded ink and the same tilt as the text around it. A clean computer font would stand out on a scan.
+Its signature tool, the **Scan Editor**, edits text in *scanned* PDFs using letters cloned from the scan itself, so a changed date or amount matches the typeface, the faded ink and the tilt of the page around it.
 
-Everything runs in your browser. Your files are never uploaded.
+**Live:** https://inkgraft.vercel.app
 
-Live app: https://inkgraft.vercel.app
+## Tools
 
-## What it does
+| Category | Ready now |
+|---|---|
+| Scan & Workflow | **Scan Editor**: edit scanned text with letters cloned from the page |
+| Page Management | Merge · Split · Compress · Organize · Rotate · Delete pages · Extract pages |
+| Edit & Annotate | Sign · Watermark · Page numbers |
+| Convert → PDF | Images to PDF (JPG, PNG, WebP, GIF, BMP) |
+| Convert → Other | PDF to JPG / PNG |
+| Security & Privacy | Protect (AES-256 password) · Remove password |
+| OCR & Smart | Searchable PDF (adds an invisible OCR text layer) |
 
-- **Type on the page:** click a word and type. You see the result on the page as you type. Press Enter to apply or Esc to cancel. Shift-click selects more words, and double-click selects the whole line.
-- **Find & replace:** search the recognised text of every page, then replace one match or all of them. Replacing part of a word keeps the rest, so `2026` → `2027` keeps the full stop in `2026.`.
-- **Letters from the scan:** when a page opens, inkgraft collects clean letters from the scan and uses them to build new words.
-  - **Same size and baseline:** each new letter is fitted to the word it replaces.
-  - **Matched ink:** each letter's ink colour and darkness are adjusted to match the word being replaced.
-- **Matching font when a letter is missing:** if the scan has no clean copy of a letter, inkgraft draws it in the installed font closest to the page's typeface. The letter is sized to the page's capital height and x-height, and given a scan-like texture.
-- **Natural layout:** when the new text is longer or shorter, the rest of the phrase slides over. Columns, amounts, ruled lines and stray marks stay where they are.
-- **Move, resize, rotate:** select any text and use the handles:
-  - ✥ moves it.
-  - ◢ resizes it.
-  - ↻ rotates it by 0.1° per pixel dragged (hold Shift for finer steps).
-- **Undo and history:** ⌘Z / Ctrl+Z undoes. Each replace-all, typed edit or drag is a single undo step. The sidebar lists every change and says which letters came from the scan and which from a font.
-- **Export:** saves `<name>-edited.pdf` at the original page size.
+More are listed on the dashboard as **Soon**, among them the camera scanner, interleave, N-up, crop, forms, redaction, Markdown/HTML/CSV to PDF, text and image extraction, metadata, compare and repair.
 
-## How it works
+### What each tool does
 
-1. **Rasterise:** [pdf.js](https://mozilla.github.io/pdf.js/) renders each page at 216 dpi.
-2. **Read the text:** [Tesseract.js](https://tesseract.projectnaptha.com/) finds words, boxes and baselines. The page tilt is the median angle of the line baselines.
-3. **Tighten word boxes:** text-recognition boxes are often loose or clipped. inkgraft trims each box to the actual ink.
-   - Ruled lines and the lines above or below are dropped.
-   - Pieces of faded letters that fall apart (an "O" printed as "( )") are put back together.
-4. **Cut letters out (on page open):**
-   - Each word is split into letters, using the page's best matching font to predict where each letter should be.
-   - Each letter is scored against that font, and badly cut letters are thrown away.
-   - Each letter's size, stroke weight and whether it is bold are recorded.
-   - The spacing between letters is measured by rebuilding real words from their own letters and comparing the width with the scan.
-5. **Edit:**
-   - The old word is painted over with the paper's colour and noise.
-   - New letters are chosen from the scan with matching size, weight and boldness.
-   - They are placed on the old word's baseline, then their ink colour and darkness are matched to the old word.
-6. **Export:** [jsPDF](https://github.com/parallax/jsPDF) puts the edited page images back into a PDF.
+- **Scan Editor:** click a word and type, or use find & replace across pages.
+  - New letters are cut from the scan, sized to the line and matched to the ink of the word they replace. A letter that never appears on the page falls back to the closest installed font.
+  - Move, resize and rotate any text.
+  - Undo, then export as a PDF.
+- **Merge:** drag files (or use the arrow buttons) to set their order.
+- **Split:** every N pages, one file per page, or custom ranges such as `1-3, 4-6, 7-`. A colour-coded preview shows which file each page lands in, and several parts download as a ZIP.
+- **Compress:** three levels.
+  - **Lossless** rewrites the file structure and keeps text selectable.
+  - **Strong** and **Extreme** re-encode each page as a 150 or 96 DPI JPEG.
+  - If the result isn't smaller, you get the original back.
+- **Organize:** drag thumbnails to reorder pages, rotate or delete single pages, and reset.
+- **Rotate, Delete, Extract:** pick pages by clicking thumbnails, shift-clicking a range, or typing a range.
+- **Sign:** draw or type a signature, place it on any page, then drag, resize or nudge it with the arrow keys. This adds an image of your signature, not a certificate-based digital signature.
+- **Watermark and Page numbers:** a live preview of the real output updates as you change the options.
+- **Protect:** AES-256 encryption, with permission flags locked by a random owner password.
+- **Remove password:** needs the current password.
+- **Searchable PDF:** Tesseract OCR reads each scanned page and adds the words as invisible text fitted to each word's box.
+
+## Privacy and security
+
+- **No uploads.** Processing happens in the page using pdf.js, pdf-lib, Tesseract.js and jsPDF.
+- **No third-party scripts.** Every library, worker, WebAssembly file and language file is self-hosted under `/vendor`, copied from `node_modules` at build time.
+- **Strict security headers** (`vercel.json`):
+  - The CSP is `default-src 'self'` and `script-src 'self' 'wasm-unsafe-eval'`: no inline scripts and no `eval`.
+  - `frame-ancestors 'none'`, `object-src 'none'` and `form-action 'none'`.
+  - `nosniff`, `no-referrer`, COOP and HSTS.
+- **pdf.js 5,** which has no eval code path. This closes the CVE-2024-4367 class of font exploits that affected the original pdf.js 3.11.
+- **Per-device preferences only.** Starred tools, recent tools and the theme are kept in your browser's local storage.
+
+## Design
+
+- React 19, Vite, TypeScript and Tailwind v4, animated with Motion.
+- [React Bits](https://reactbits.dev) components: Aurora, BlurText, ShinyText and SpotlightCard.
+- The hero figure, **the graft press**, is an isometric machine drawn with the anatomy iso kit. It shows how the Scan Editor works: a gantry lifts letters out of a type case harvested from the scan and sets "November" where "October" was erased (7 letters cloned, 1 from a font).
+- Dark first, with a paper-white light theme.
+- ⌘K / Ctrl+K command palette.
+- Respects reduced-motion settings.
 
 ## Run locally
-
-It is a static site with no build step:
 
 ```sh
 git clone https://github.com/Arunachalam0606/inkgraft.git
 cd inkgraft
-python3 -m http.server 8765
-# open http://127.0.0.1:8765
+npm install
+npm run dev        # http://localhost:5173
+npm test           # textops + node:test suites for page ops, stamping, security, OCR layer
+npm run build && npx vite preview   # production build, served with the production security headers
 ```
 
-Tests for the find & replace text helpers:
+Rebuild the hero figure after changing its geometry:
 
 ```sh
-node test.js
+node scripts/figure/build.mjs
 ```
 
-## Files
+## Layout
 
-| File | Purpose |
+| Path | Contents |
 |---|---|
-| `index.html` | The whole app: UI, text recognition, letter cutting, editing, export |
-| `textops.js` | Pure find & replace helpers, shared by the app and the tests |
-| `test.js` | Node tests for `textops.js` |
+| `src/pages/` | Dashboard, tool page frame, recent and starred lists |
+| `src/tools/` | One lazily loaded component per tool |
+| `src/lib/ops.ts` | Pure PDF operations: page building, split, stamping, encryption, OCR text layer. Tested in Node. |
+| `src/lib/registry.ts` | Every tool, its category and whether it's ready |
+| `src/components/` | Sidebar, command palette, drop zone, page grid, live preview, React Bits components |
+| `src/figure/` | The graft press hero figure (generated art plus its live controller) |
+| `public/editor/` | The Scan Editor, a standalone page |
+| `scripts/vendor.mjs` | Copies runtime libraries into `public/vendor` |
 
 ## Limits
 
-- **Letters that are missing from the page:** if a letter never appears in normal-weight text on the page (for example a capital N), a matching font is used for it. Up close it can look slightly different.
-- **Bad text recognition:** if the text recogniser can't read a word, it can't be found or replaced. Try searching for part of the word.
-- **Image-only output:** the exported PDF is page images, so its text can't be selected.
-- **Loads from CDNs:** pdf.js, Tesseract.js and jsPDF are loaded from public CDNs. The first page load needs internet, and Tesseract also downloads its English language data.
+- **Latin text only for stamps.** Watermark and page numbers use the standard PDF fonts, which only cover Latin-1. Other scripts such as Tamil are refused with a message rather than printed as "?".
+- **Strong and Extreme compression rasterise pages.** Text stops being selectable; Lossless keeps it.
+- **OCR is English only.** It reads printed text, not handwriting.
+- **Signature placement on rotated pages:** the position is correct, but the image isn't counter-rotated.
 
 ## Responsible use
 
-inkgraft is for fixing typos, dates and other details in **your own** documents. Do not use it to forge or falsify documents. Doing so is illegal in most places.
+inkgraft is for fixing your own documents. Don't use it to forge or falsify documents; that is illegal in most places.
