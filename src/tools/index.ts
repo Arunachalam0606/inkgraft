@@ -2,6 +2,7 @@ import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 
 // One lazily-loaded component per tool id: each tool's code (and pdf libraries) loads only when it is opened.
 export const TOOL_UI: Record<string, LazyExoticComponent<ComponentType>> = {
+  'compare': lazy(() => import('./Batch4').then((m) => ({ default: m.Compare }))),
   'auto-redact': lazy(() => import('./Batch4').then((m) => ({ default: m.AutoRedact }))),
   'redact': lazy(() => import('./Batch4').then((m) => ({ default: m.Redact }))),
   'invert': lazy(() => import('./Batch4').then((m) => ({ default: m.Invert }))),

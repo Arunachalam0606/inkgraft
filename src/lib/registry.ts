@@ -86,7 +86,7 @@ export const TOOLS: Tool[] = [
   t('auto-redact', 'Auto-Redact PII', 'Find and remove Aadhaar, PAN, card numbers, emails and phones.', 'security', ShieldCheck, true),
 
   t('ocr', 'Searchable PDF (OCR)', 'Add a hidden text layer to scanned PDFs so you can search and copy.', 'smart', ScanSearch, true, { keywords: 'ocr text recognize searchable' }),
-  t('compare', 'Compare PDFs', 'See two PDFs side by side with the differences highlighted.', 'smart', Columns2),
+  t('compare', 'Compare PDFs', 'See two PDFs side by side with the differences highlighted.', 'smart', Columns2, true),
   t('repair', 'Repair PDF', 'Rebuild damaged or broken PDF files.', 'smart', Wrench),
 
   t('gst-invoice', 'GST Invoice', 'Create GST tax invoices with CGST, SGST, IGST and HSN codes.', 'business', Receipt),
