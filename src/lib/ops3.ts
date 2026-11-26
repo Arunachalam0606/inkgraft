@@ -1,5 +1,5 @@
 // Forms and workflows (pdf-lib, no DOM) — tested in tests/ops3.test.ts.
-import { PDFCheckBox, PDFDropdown, PDFOptionList, PDFRadioGroup, PDFTextField, PDFDocument } from '@cantoo/pdf-lib';
+import { PDFCheckBox, PDFDropdown, PDFOptionList, PDFRadioGroup, PDFTextField, PDFDocument, StandardFonts, rgb } from '@cantoo/pdf-lib';
 import { buildFrom, load, pageNumbers, protect, watermark, type Corner } from './ops.ts';
 import { bates, flatten, headerFooter, writeMeta } from './ops2.ts';
 
@@ -72,4 +72,28 @@ export async function runWorkflow(bytes: Uint8Array, steps: Step[], file: string
     }
   }
   return b;
+}
+
+// ---------- free-form edits ----------
+export interface Edit {
+  page: number; kind: 'text' | 'rect' | 'image';
+  x: number; y: number; w: number; h: number; // PDF user space, (x, y) = bottom-left
+  text?: string; size?: number; color?: [number, number, number]; opacity?: number; bold?: boolean; png?: Uint8Array;
+}
+
+/** Draw text boxes, rectangles (white-out, highlight) and PNG images onto pages. */
+export async function applyEdits(bytes: Uint8Array, edits: Edit[]) {
+  const doc = await load(bytes);
+  const reg = await doc.embedFont(StandardFonts.Helvetica), bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const pages = doc.getPages();
+  for (const e of edits) {
+    const p = pages[e.page], color = rgb(...(e.color ?? [0, 0, 0]));
+    if (e.kind === 'rect') p.drawRectangle({ x: e.x, y: e.y, width: e.w, height: e.h, color, opacity: e.opacity ?? 1 });
+    else if (e.kind === 'image' && e.png) { const img = await doc.embedPng(e.png); p.drawImage(img, { x: e.x, y: e.y, width: e.w, height: e.h, opacity: e.opacity ?? 1 }); }
+    else if (e.kind === 'text' && e.text) {
+      const font = e.bold ? bold : reg, size = e.size ?? 12;
+      e.text.split('\n').forEach((line, i) => p.drawText(line, { x: e.x, y: e.y + e.h - size * (i + 1), size, font, color, lineHeight: size * 1.2 }));
+    }
+  }
+  return doc.save();
 }

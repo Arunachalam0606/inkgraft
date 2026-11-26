@@ -34,3 +34,14 @@ test('workflow chains steps in order and ends encrypted', async () => {
   assert.ok(s.includes('Page 2 of 2') && s.includes('DRAFT'));
   await assert.rejects(() => runWorkflow(out, [{ kind: 'protect', password: 'x' }, { kind: 'flatten' }], 'f.pdf'), /last step/);
 });
+
+import { applyEdits } from '../src/lib/ops3.ts';
+test('applyEdits adds text where asked and white-out rectangles', async () => {
+  const d = await PDFDocument.create(); d.addPage([300, 400]); d.addPage([300, 400]);
+  const out = await applyEdits(await d.save(), [{ page: 1, kind: 'text', x: 40, y: 300, w: 200, h: 40, text: 'Approved\nby finance', size: 14 }, { page: 0, kind: 'rect', x: 10, y: 10, w: 50, h: 20, color: [1, 1, 1] }]);
+  const doc = await getDocument({ data: out.slice() }).promise;
+  const items = (await (await doc.getPage(2)).getTextContent()).items as any[];
+  assert.deepEqual(items.map((i) => i.str).filter((s: string) => s.trim()), ['Approved', 'by finance']);
+  assert.ok(Math.abs(items[0].transform[4] - 40) < 0.5);
+  assert.ok((await (await doc.getPage(1)).getOperatorList()).fnArray.length > 0);
+});

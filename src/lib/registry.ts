@@ -59,7 +59,7 @@ export const TOOLS: Tool[] = [
   t('sign', 'Sign PDF', 'Draw or type your signature and place it anywhere on the page.', 'edit', Signature, true, { keywords: 'signature autograph' }),
   t('watermark', 'Add Watermark', 'Stamp text across your pages — angle, size and opacity your way.', 'edit', Droplets, true),
   t('page-numbers', 'Add Page Numbers', 'Number pages with your choice of position, format and start.', 'edit', Hash, true),
-  t('edit-pdf', 'Edit PDF', 'Add text, shapes and images to any PDF.', 'edit', PenLine),
+  t('edit-pdf', 'Edit PDF', 'Add text, shapes and images to any PDF.', 'edit', PenLine, true),
   t('fill-form', 'Fill PDF Form', 'Fill a fillable PDF and lock the answers in.', 'edit', ClipboardList, true),
   t('redact', 'Redact PDF', 'Permanently remove sensitive text and areas.', 'edit', EyeOff, true),
   t('bates', 'Bates Numbering', 'Stamp sequential Bates numbers across documents.', 'edit', ListOrdered, true),
