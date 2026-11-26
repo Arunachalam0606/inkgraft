@@ -1,6 +1,6 @@
 import { motion, LayoutGroup } from 'motion/react';
 import { ArrowRight, Search, ShieldCheck, WifiOff, BadgeCheck, UserX } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { Suspense, lazy, useMemo, useState } from 'react';
 import Aurora from '../components/reactbits/Aurora';
 import BlurText from '../components/reactbits/BlurText';
 import ShinyText from '../components/reactbits/ShinyText';
@@ -9,6 +9,8 @@ import { CATEGORIES, FEATURED, TOOLS, toolById, type CategoryId, type Tool } fro
 import { theme } from '../lib/prefs';
 import { openTool } from '../components/CommandPalette';
 import { ToolRow } from '../components/ToolRow';
+
+const GraftFigure = lazy(() => import('../figure/GraftFigure'));
 
 const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -23,11 +25,12 @@ const TRUST = [
 function Hero({ onSearch }: { onSearch: () => void }) {
   const th = theme.use();
   return (
-    <section className="relative isolate overflow-hidden rounded-b-[28px] px-6 pt-20 pb-16 sm:px-10 lg:pt-28">
+    <section className="relative isolate overflow-hidden rounded-b-[28px] px-6 pt-20 pb-16 sm:px-10 lg:pt-28 xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,520px)] xl:items-center xl:gap-6">
       <div className="absolute inset-x-0 top-0 -z-10 h-[520px] opacity-45 [mask-image:radial-gradient(70%_80%_at_60%_0%,black,transparent)]">
         <Aurora colorStops={th === 'dark' ? ['#3b4fd8', '#7c93ff', '#2a2f6e'] : ['#b9c6ff', '#dfe5ff', '#c7d0ff']} amplitude={0.9} blend={0.55} speed={0.6} lightMode={th === 'light'} />
       </div>
 
+      <div>
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}
         className="mb-6 inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface/60 px-3 py-1 text-[12.5px] backdrop-blur">
         <span className="size-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--accent)]" />
@@ -65,6 +68,11 @@ function Hero({ onSearch }: { onSearch: () => void }) {
           </motion.li>
         ))}
       </motion.ul>
+      </div>
+      <motion.div initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }} animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }} transition={{ duration: 1, delay: 0.3, ease }}
+        className="mt-14 xl:mt-0">
+        <Suspense fallback={<div className="aspect-[640/440]" />}><GraftFigure /></Suspense>
+      </motion.div>
     </section>
   );
 }

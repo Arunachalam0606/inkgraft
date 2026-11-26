@@ -1,0 +1,25 @@
+/* Retint the anatomy kit to inkgraft's cool palette (dark only); light theme keeps the kit's own paper tones. */
+.graft.iso { margin: 0; --graft-paper: #ffffff; --graft-paper-side: #e2e1dc; --graft-print: #6d717a; }
+.graft.iso:not([data-theme='light']) {
+  --anatomy-paper: #10131a; --anatomy-face: #1a1f29; --anatomy-top: #1e2430;
+  --anatomy-shade-0: #0c0f14; --anatomy-shade-1: #10141b; --anatomy-shade-2: #141922; --anatomy-shade-3: #181e29;
+  --anatomy-lit-top: #2a3346; --anatomy-lit-shade: #1f2635;
+  --anatomy-hi: #e3e8f2; --anatomy-mid: #8a93a6; --anatomy-lo: #525a6b; --anatomy-faint: #343b49; --anatomy-lit: #c3cdff;
+  --graft-paper: #dedad0; --graft-paper-side: #a9a59b; --graft-print: #4d5058;
+  --anatomy-halo: #020305; --anatomy-dot: #dfe5f1;
+  margin: 0;
+}
+.graft.iso[data-theme='light'] { --anatomy-lit: #2f4fd8; }
+/* the scanned page is the subject: real paper, dark print */
+.graft-paper > .iso-top, .graft-paper > .iso-fill { fill: var(--graft-paper); }
+.graft-paper > .iso-shade { fill: var(--graft-paper-side); }
+.graft-print .iso-line { stroke: var(--graft-print); }
+.graft-print .iso-face-text { fill: var(--graft-print); }
+.graft-stage { cursor: pointer; border-radius: 20px; outline-offset: 4px; }
+.graft-stage svg { overflow: visible; }
+.graft-wipe { fill: var(--graft-paper); }
+.graft-bar {
+  display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; padding: 0 6px;
+  font: 500 11.5px/1.4 var(--anatomy-mono); color: var(--faint); white-space: nowrap;
+}
+.graft-readout { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
