@@ -39,7 +39,7 @@ const t = (id: string, name: string, desc: string, category: CategoryId, icon: L
 export const TOOLS: Tool[] = [
   t('scan-editor', 'Scan Editor', 'Edit text in scanned PDFs using letters cloned from the scan itself — same typeface, same ink, same tilt.', 'scan', ScanText, true, { href: '/editor/', keywords: 'inkgraft edit scanned ocr font replace date' }),
   t('scan-document', 'Scan Document', 'Use your camera to scan a document, straighten it and save it as a PDF.', 'scan', Camera),
-  t('workflow', 'Workflow Builder', 'Chain several tools — compress, watermark, number — and run them in one go.', 'scan', Workflow),
+  t('workflow', 'Workflow Builder', 'Chain several tools — compress, watermark, number — and run them in one go.', 'scan', Workflow, true),
 
   t('merge', 'Merge PDFs', 'Combine several PDFs into one, in the order you choose.', 'pages', Files, true, { keywords: 'combine join' }),
   t('split', 'Split PDF', 'Cut a PDF into separate files by page ranges or every N pages.', 'pages', Scissors, true, { keywords: 'separate ranges' }),
